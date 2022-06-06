@@ -1,0 +1,950 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/13/2022 1:24:58 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="GANGAMINI"
+  DTS:CreatorName="Gangamini\Gangamini Athmaja"
+  DTS:DTSID="{E52CD812-DE9C-4771-8EA6-88005B7BB5A9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="CompleteTime_Load_DW"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{87061F39-6B93-49CB-A2BE-069F3A0B3A44}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{11C07BA4-C68B-43E8-8E71-1AF43F525AA4}"
+      DTS:ObjectName="GANGAMINI.Assignment_Retail_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=GANGAMINI;Initial Catalog=Assignment_Retail_DW;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1B836CAD-BD32-49D2-9DE7-714E4741A2DF}"
+      DTS:ObjectName="GANGAMINI.Assignment_Retail_Staging">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=GANGAMINI;Initial Catalog=Assignment_Retail_Staging;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Complete Time"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3CB84254-D0BD-4752-B875-C2FA9B4AD7BA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Complete Time"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Update Complete Time\Extract from complete time staging"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Extract from complete time staging"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[StgCompletedTime]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Complete Time\Extract from complete time staging.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_Staging]"
+                  connectionManagerRefId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_Staging]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].ExternalColumns[FlightNumber]"
+                      length="50"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[FlightNumber]"
+                      name="FlightNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].ExternalColumns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="FlightNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      name="accm_txn_complete_time" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[FlightNumber]"
+                      name="FlightNumber" />
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time" />
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Complete Time\Update Complete Time"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Complete Time"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[FactFlight]
+SET [accm_txn_complete_time] = ?
+WHERE [FlightNumber] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Complete Time\Update Complete Time.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].Columns[FlightNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FlightNumber"
+                      externalMetadataColumnId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[FlightNumber]" />
+                    <inputColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].Columns[accm_txn_complete_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_complete_time"
+                      externalMetadataColumnId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="dbTimeStamp"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Complete Time\Update Complete Time.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update Complete Time.Paths[OLE DB Source Output]"
+              endId="Package\Update Complete Time\Update Complete Time.Inputs[OLE DB Command Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update Complete Time\Extract from complete time staging.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update Prosses Time"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D8DDBD60-E1E5-4277-A407-B34E138A339C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Prosses Time"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Update Prosses Time\Load Data From FactFlight"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Load Data From FactFlight"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactFlight]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Prosses Time\Load Data From FactFlight.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[FlightNumber]"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[FlightNumber]"
+                      name="FlightNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[PilotSK]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[PilotSK]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[PilotSK]"
+                      name="PilotSK"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[AircraftSK]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[AircraftSK]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[AircraftSK]"
+                      name="AircraftSK"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[AccidentSK]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[AccidentSK]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[AccidentSK]"
+                      name="AccidentSK"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[DateKey]"
+                      name="DateKey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[DepartureTime]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[DepartureTime]"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[DepartureTime]"
+                      name="DepartureTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[ArrivelTime]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[ArrivelTime]"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[ArrivelTime]"
+                      name="ArrivelTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[FlyingHours]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[FlyingHours]"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[FlyingHours]"
+                      name="FlyingHours"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[InsertDate]"
+                      name="InsertDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[ModifiedDate]"
+                      name="ModifiedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[accm_txn_create_time]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_create_time]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[accm_txn_create_time]"
+                      name="accm_txn_create_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[txn_process_time_hours]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[txn_process_time_hours]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[txn_process_time_hours]"
+                      name="txn_process_time_hours"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="FlightNumber" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[PilotSK]"
+                      dataType="i4"
+                      name="PilotSK" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[AircraftSK]"
+                      dataType="i4"
+                      name="AircraftSK" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[AccidentSK]"
+                      dataType="i4"
+                      name="AccidentSK" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[DateKey]"
+                      dataType="i4"
+                      name="DateKey" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[DepartureTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DepartureTime" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[ArrivelTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ArrivelTime" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[FlyingHours]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="FlyingHours" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      name="InsertDate" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="ModifiedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_create_time]"
+                      dataType="dbTimeStamp"
+                      name="accm_txn_create_time" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      name="accm_txn_complete_time" />
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].ExternalColumns[txn_process_time_hours]"
+                      dataType="i4"
+                      name="txn_process_time_hours" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[FlightNumber]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[FlightNumber]"
+                      name="FlightNumber" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[PilotSK]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[PilotSK]"
+                      name="PilotSK" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[AircraftSK]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[AircraftSK]"
+                      name="AircraftSK" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[AccidentSK]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[AccidentSK]"
+                      name="AccidentSK" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[DateKey]"
+                      name="DateKey" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[DepartureTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[DepartureTime]"
+                      name="DepartureTime" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ArrivelTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ArrivelTime]"
+                      name="ArrivelTime" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[FlyingHours]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[FlyingHours]"
+                      name="FlyingHours" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[InsertDate]"
+                      name="InsertDate" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ModifiedDate]"
+                      name="ModifiedDate" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[accm_txn_create_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[accm_txn_create_time]"
+                      name="accm_txn_create_time" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[accm_txn_complete_time]"
+                      name="accm_txn_complete_time" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[txn_process_time_hours]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[txn_process_time_hours]"
+                      name="txn_process_time_hours" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Update Prosses Time\Update Process Time"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update Process Time"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[FactFlight]
+SET [txn_process_time_hours] = DATEDIFF (Hh, accm_txn_create_time, accm_txn_complete_time)
+WHERE [FlightNumber] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Update Prosses Time\Update Process Time.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  connectionManagerRefId="Package.ConnectionManagers[GANGAMINI.Assignment_Retail_DW]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input].Columns[FlightNumber]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FlightNumber"
+                      externalMetadataColumnId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output].Columns[FlightNumber]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Update Prosses Time\Update Process Time.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Update Prosses Time.Paths[OLE DB Source Output]"
+              endId="Package\Update Prosses Time\Update Process Time.Inputs[OLE DB Command Input]"
+              name="OLE DB Source Output"
+              startId="Package\Update Prosses Time\Load Data From FactFlight.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BA676003-CB46-400F-AAE2-1D62BB49C4D0}"
+      DTS:From="Package\Update Complete Time"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update Prosses Time" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Update Complete Time"
+          TopLeft="121.428573496488,60.4117655531345" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\Update Prosses Time"
+          TopLeft="123.571430675837,177.411767194015" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="213.500002086163,102.011765553135">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.4000016408808"
+              Start="0,0"
+              End="0,67.9000016408808">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.9000016408808" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Update Complete Time">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Update Complete Time\Update Complete Time"
+          TopLeft="532.857151931646,71.8823539492994" />
+        <NodeLayout
+          Size="244,41.6"
+          Id="Package\Update Complete Time\Extract from complete time staging"
+          TopLeft="130.000002213887,76.4705893077653" />
+        <EdgeLayout
+          Id="Package\Update Complete Time.Paths[OLE DB Source Output]"
+          TopLeft="374.000002213887,94.9764716285324">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="158.857149717759,0"
+              Start="0,0"
+              End="151.357149717759,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="151.357149717759,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update Complete Time\Extract from complete time staging">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Update Prosses Time">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="202.4,41.6"
+          Id="Package\Update Prosses Time\Load Data From FactFlight"
+          TopLeft="107,126" />
+        <NodeLayout
+          Size="177.6,41.6"
+          Id="Package\Update Prosses Time\Update Process Time"
+          TopLeft="513,123" />
+        <EdgeLayout
+          Id="Package\Update Prosses Time.Paths[OLE DB Source Output]"
+          TopLeft="309.4,145.3">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="203.6,0"
+              Start="0,0"
+              End="196.1,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="196.1,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Update Prosses Time\Load Data From FactFlight">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
